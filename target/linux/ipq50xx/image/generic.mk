@@ -33,3 +33,5 @@ ifneq ($(CONFIG_TARGET_ROOTFS_INITRAMFS),)
 endif
 endef
 TARGET_DEVICES += redmi_ax3000
+
+$(eval $(call BuildImage))
