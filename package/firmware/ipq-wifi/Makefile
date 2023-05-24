@@ -57,7 +57,7 @@ define Package/ipq-wifi-default
   SUBMENU:=ath10k Board-Specific Overrides
   SECTION:=firmware
   CATEGORY:=Firmware
-  DEPENDS:=@(TARGET_ipq40xx||TARGET_ipq806x)
+  DEPENDS:=@(TARGET_ipq40xx||TARGET_ipq50xx||TARGET_ipq806x)
   TITLE:=Custom Board
 endef
 
@@ -66,13 +66,23 @@ define ipq-wifi-install-one-to
   $(INSTALL_DATA) $(1) $(2)/lib/firmware/ath10k/$(3)/board-2.bin
 endef
 
+define ipq-wifi-install-ath11-one-to
+  $(INSTALL_DIR)  $(2)/lib/firmware/ath11k/$(3)/
+  $(INSTALL_DATA) $(1) $(2)/lib/firmware/ath11k/$(3)/board-2.bin
+endef
+
 define ipq-wifi-install-one
+
+  $(if $(filter $(suffix $(1)),.QCN6122 .qcn6122),\
+    $(call ipq-wifi-install-one-to,ath11k,$(1),$(2),qcn6122/hw1.0),\
   $(if $(filter $(suffix $(1)),.QCA4019 .qca4019),\
     $(call ipq-wifi-install-one-to,$(1),$(2),QCA4019/hw1.0),\
   $(if $(filter $(suffix $(1)),.QCA9888 .qca9888),\
     $(call ipq-wifi-install-one-to,$(1),$(2),QCA9888/hw2.0),\
   $(if $(filter $(suffix $(1)),.QCA9984 .qca9984),\
     $(call ipq-wifi-install-one-to,$(1),$(2),QCA9984/hw1.0),\
+  $(if $(filter $(suffix $(1)),.IPQ5018 .ipq5018),\
+    $(call ipq-wifi-install-one-to,$(1),$(2),IPQ5018/hw1.0),\
     $(error Unrecognized board-file suffix '$(suffix $(1))' for '$(1)')\
   )))
 
@@ -107,7 +117,7 @@ Do not install it for any other device!
 endef
 
 # Add board name to ALLWIFIBOARDS
-# Place files in this directory as board-<devicename>.<qca4019|qca9888|qca9984>
+# Place files in this directory as board-<devicename>.<qca4019|qca9888|qca9984|qcn6122|>
 # Add $(eval $(call generate-ipq-wifi-package,<devicename>,<display name>))
 
 $(eval $(call generate-ipq-wifi-package,8dev_habanero-dvk,8devices Habanero DVK))
@@ -135,5 +145,6 @@ $(eval $(call generate-ipq-wifi-package,nec_wg2600hp3,NEC Platforms WG2600HP3))
 $(eval $(call generate-ipq-wifi-package,plasmacloud_pa1200,Plasma Cloud PA1200))
 $(eval $(call generate-ipq-wifi-package,plasmacloud_pa2200,Plasma Cloud PA2200))
 $(eval $(call generate-ipq-wifi-package,qxwlan_e2600ac,Qxwlan E2600AC))
+$(eval $(call generate-ipq-wifi-package,redmi_ax3000,Redmi AX3000))
 
 $(foreach PACKAGE,$(ALLWIFIPACKAGES),$(eval $(call BuildPackage,$(PACKAGE))))
