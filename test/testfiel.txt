@@ -1,0 +1,15 @@
+log
+
+package/boot/uboot-envtools/files/ipq50x	[new file with mode: 0644]	blob
+package/firmware/ipq-wifi/Makefile		diff | blob | history
+package/firmware/ipq-wifi/board-xiaomi_ax3600.ipq8074	[new file with mode: 0644]	blob
+package/firmware/ipq-wifi/board-xiaomi_ax3600.qca9889	[new file with mode: 0644]	blob
+
+target/linux/ipq50x/base-files/etc/board.d/01_leds	[new file with mode: 0644]	blob
+target/linux/ipq50x/base-files/etc/board.d/02_network	[new file with mode: 0644]	blob
+target/linux/ipq50x/base-files/etc/hotplug.d/firmware/11-ath11k-caldata	[new file with mode: 0644]	blob
+target/linux/ipq50x/base-files/lib/upgrade/platform.sh	[new file with mode: 0644]	blob
+target/linux/ipq50x/files/arch/arm64/boot/dts/qcom/ipq8071-ax3600.dts	[new file with mode: 0644]	blob
+target/linux/ipq50x/files/arch/arm64/boot/dts/qcom/ipq8071-ax3600.dtsi	[new file with mode: 0644]	blob
+target/linux/ipq50x/image/generic.mk		diff | blob | history
+target/linux/ipq50xx/base-files/lib/upgrade/platform.sh
